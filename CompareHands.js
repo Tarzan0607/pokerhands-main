@@ -138,4 +138,36 @@ module.exports = class CompareHands {
     return this.scoreWithKickers(0, hand.cards);
   }
 
+  static getArray(array) {
+    var a = array.concat();
+    for (var i = 0; i < a.length; ++i) {
+      for (var j = i + 1; j < a.length; ++j) {
+        if ((a[i].suit + a[i].rank) === (a[j].suit + a[j].rank))
+          a.splice(j--, 1);
+      }
+    }
+
+    return a;
+  }
+
+  static checkIfNotDuplicate(hand1, hand2) {
+    let allCards = hand1.cards
+    if (hand2 != null) {
+      allCards = this.getArray(allCards.concat(hand2.cards))
+    }
+    else{
+      allCards = this.getArray(allCards)
+    }
+    if ((hand2 == null) && (allCards.length == hand1.cards.length)) {
+      return true
+    }
+    else if ((hand2 != null) && (allCards.length == (hand1.cards.length + hand2.cards.length))) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+  
 }
+
